@@ -1,7 +1,7 @@
 // ========================
 // ⚙️ Mode DEBUG activable ici
 // ========================
-const DEBUG = true;
+const DEBUG = false;
 
 let faqData = [];
 let formulaire = { version: '', appareil: '', probleme: '' };
@@ -188,7 +188,7 @@ async function recherche(val) {
     container.appendChild(document.createElement('br'));
   });
 
-  //if (DEBUG) console.log(`[DEBUG] Affichage final de ${allPosts.length} résultats`);
+  if (DEBUG) console.log(`[DEBUG] Affichage final de ${allPosts.length} résultats`);
 
   // 4. Bloc JSON debug optionnel
   if (DEBUG) {
