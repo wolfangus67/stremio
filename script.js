@@ -121,7 +121,7 @@ function copier() {
   alert('✅ Message copié dans le presse-papier');
 }
 
-// === RECHERCHE REDDIT AVEC DEBUG ===
+// === RECHERCHE REDDIT VIA ALLOoRIGINS (CORS FIX) ===
 async function recherche(val) {
   const container = document.getElementById('search-results');
   container.innerHTML = `⏳ Recherche en cours pour "<strong>${val}</strong>"...`;
@@ -142,19 +142,21 @@ async function recherche(val) {
     return;
   }
 
-  // 2. Requêtes Reddit
+  // 2. Requêtes Reddit via proxy
   const subreddits = ["Stremio", "StremioAddons"];
   let allPosts = [];
 
   for (const sub of subreddits) {
-    const url = `https://www.reddit.com/r/${sub}/search.json?q=${encodeURIComponent(val)}&restrict_sr=1&sort=new`;
-    if (DEBUG) console.log(`[DEBUG] Requête Reddit → ${url}`);
+    const target = `https://www.reddit.com/r/${sub}/search.json?q=${encodeURIComponent(val)}&restrict_sr=1&sort=new`;
+    const url = `https://api.allorigins.win/get?url=${encodeURIComponent(target)}`;
+
+    if (DEBUG) console.log(`[DEBUG] Requête Reddit via proxy → ${url}`);
 
     try {
       const r = await fetch(url);
       if (!r.ok) throw new Error(`Erreur HTTP ${r.status}`);
-      const data = await r.json();
-      if (DEBUG) console.log(`[DEBUG] Résultat ${sub} :`, data);
+      const wrappedData = await r.json();
+      const data = JSON.parse(wrappedData.contents);
 
       const posts = data.data.children.map(p => ({
         title: p.data.title,
