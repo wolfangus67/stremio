@@ -148,7 +148,8 @@ async function recherche(val) {
 
   for (const sub of subreddits) {
     const target = `https://www.reddit.com/r/${sub}/search.json?q=${encodeURIComponent(val)}&restrict_sr=1&sort=new`;
-    const url = `https://api.allorigins.win/get?url=${encodeURIComponent(target)}`;
+    const url = `https://corsproxy.io/?${encodeURIComponent(target)}`;
+
 
     if (DEBUG) console.log(`[DEBUG] Requête Reddit via proxy → ${url}`);
 
