@@ -143,7 +143,7 @@ async function recherche(val) {
   }
 
   // 2. Requêtes Reddit via proxy
-  const subreddits = ["Stremio", "StremioAddons"];
+  const subreddits = ["StremioAddons"];
   let allPosts = [];
 
   for (const sub of subreddits) {
@@ -188,7 +188,7 @@ async function recherche(val) {
     container.appendChild(document.createElement('br'));
   });
 
-  if (DEBUG) console.log(`[DEBUG] Affichage final de ${allPosts.length} résultats`);
+  //if (DEBUG) console.log(`[DEBUG] Affichage final de ${allPosts.length} résultats`);
 
   // 4. Bloc JSON debug optionnel
   if (DEBUG) {
