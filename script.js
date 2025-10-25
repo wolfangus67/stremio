@@ -121,7 +121,7 @@ function copier() {
   alert('✅ Message copié dans le presse-papier');
 }
 
-// === RECHERCHE REDDIT VIA ALLOoRIGINS (CORS FIX) ===
+// === RECHERCHE REDDIT via corsproxy.io ===
 async function recherche(val) {
   const container = document.getElementById('search-results');
   container.innerHTML = `⏳ Recherche en cours pour "<strong>${val}</strong>"...`;
@@ -150,14 +150,12 @@ async function recherche(val) {
     const target = `https://www.reddit.com/r/${sub}/search.json?q=${encodeURIComponent(val)}&restrict_sr=1&sort=new`;
     const url = `https://corsproxy.io/?${encodeURIComponent(target)}`;
 
-
     if (DEBUG) console.log(`[DEBUG] Requête Reddit via proxy → ${url}`);
 
     try {
       const r = await fetch(url);
       if (!r.ok) throw new Error(`Erreur HTTP ${r.status}`);
-      const data = await r.json();
-
+      const data = await r.json(); // ✅ Pas de JSON.parse ici
 
       const posts = data.data.children.map(p => ({
         title: p.data.title,
