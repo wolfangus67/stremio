@@ -1,35 +1,16 @@
-// ...existing code...
-function escapeHtml(str) {
-  return String(str)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
-
 async function recherche(val) {
   const container = document.getElementById('search-results');
-  const safeVal = (val || "").trim();
+  container.innerHTML = `⏳ Recherche en cours pour "<strong>${val}</strong>"...`;
 
-  if (!safeVal) {
-    container.textContent = "⚠️ Veuillez entrer un mot clé.";
+  if (!val || val.trim() === "") {
+    container.innerHTML = "⚠️ Veuillez entrer un mot clé.";
     return;
   }
 
-  container.textContent = `⏳ Recherche en cours pour "${safeVal}"...`;
-
-  // 1. FAQ locale (si définie)
-  let localSolution = null;
-  if (typeof findSolution === 'function') {
-    try {
-      localSolution = findSolution(safeVal);
-    } catch (e) {
-      console.error('Erreur dans findSolution', e);
-    }
-  }
-  if (localSolution && localSolution.length) {
-    container.innerHTML = `<h3>✅ Résultat FAQ :</h3><ul>${localSolution.map(s => `<li>${escapeHtml(s)}</li>`).join('')}</ul>`;
+  // 1. FAQ locale
+  const localSolution = findSolution(val);
+  if (localSolution) {
+    container.innerHTML = `<h3>✅ Résultat FAQ :</h3><ul>${localSolution.map(s => `<li>${s}</li>`).join('')}</ul>`;
     return;
   }
 
@@ -38,12 +19,12 @@ async function recherche(val) {
   let allPosts = [];
 
   for (const sub of subreddits) {
-    const url = `https://www.reddit.com/r/${encodeURIComponent(sub)}/search.json?q=${encodeURIComponent(safeVal)}&restrict_sr=1&sort=new&limit=10`;
+    const url = `https://www.reddit.com/r/${sub}/search.json?q=${encodeURIComponent(val)}&restrict_sr=1&sort=new`;
     try {
       const r = await fetch(url);
       if (!r.ok) throw new Error(`Erreur HTTP ${r.status}`);
       const data = await r.json();
-      const posts = (data.data.children || []).map(p => ({
+      const posts = data.data.children.map(p => ({
         title: p.data.title,
         link: `https://reddit.com${p.data.permalink}`,
         sub
@@ -51,35 +32,22 @@ async function recherche(val) {
       allPosts = allPosts.concat(posts);
     } catch (e) {
       console.error(`❌ Erreur avec le subreddit ${sub}`, e);
-      // Probable blocage CORS côté navigateur -> informer l'utilisateur
-      if (e instanceof TypeError) {
-        container.innerHTML = `❌ Requête bloquée (probable CORS). Pour interroger Reddit depuis le navigateur, utilisez un proxy serveur ou relayer la requête côté backend. Voir la console pour détails.`;
-        return;
-      }
     }
   }
 
   // 3. Affichage des résultats
-  container.innerHTML = ""; // vider avant affichage
   if (allPosts.length === 0) {
-    container.textContent = `❌ Aucun résultat trouvé.`;
+    container.innerHTML = `❌ Aucun résultat trouvé ou requête bloquée.`;
     return;
   }
 
-  const title = document.createElement('h3');
-  title.textContent = '🔎 Résultats Reddit :';
-  container.appendChild(title);
-
-  const list = document.createElement('div');
+  container.innerHTML = `<h3>🔎 Résultats Reddit :</h3>`;
   allPosts.slice(0, 10).forEach(post => {
     const a = document.createElement('a');
     a.href = post.link;
     a.target = "_blank";
-    a.rel = "noopener noreferrer";
-    a.textContent = `📌 [${post.sub}] ${post.title}`;
-    list.appendChild(a);
-    list.appendChild(document.createElement('br'));
+    a.innerText = `📌 [${post.sub}] ${post.title}`;
+    container.appendChild(a);
+    container.appendChild(document.createElement('br'));
   });
-  container.appendChild(list);
 }
-// ...existing code...
