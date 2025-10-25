@@ -8,11 +8,14 @@
 <body>
   <h1>FAQ Interactive Stremio</h1>
 
-  <!-- Barre de recherche -->
-  <input type="text" id="search" placeholder="Tapez un mot clé (ex: catalogue)">
+  <!-- 🔍 Barre de recherche avec bouton -->
+  <div id="search-bar">
+    <input type="text" id="search" placeholder="Tapez un mot clé (ex: catalogue)">
+    <button id="search-btn">🔍 Rechercher</button>
+  </div>
   <div id="search-results"></div>
 
-  <!-- Parcours guidé -->
+  <!-- 🧭 Parcours guidé -->
   <div id="steps">
     <h2>Guidage par étapes</h2>
     <div id="step-version"></div>
@@ -20,7 +23,7 @@
     <div id="step-problem"></div>
   </div>
 
-  <!-- Résultat ou formulaire -->
+  <!-- 📋 Résultat ou message structuré -->
   <div id="solution"></div>
   <div id="formulaire-container" style="display:none;">
     <h3>Message prêt à poster :</h3>
