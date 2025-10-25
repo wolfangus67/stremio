@@ -1,0 +1,20 @@
+[
+  {
+    "titre": "Catalogue vide",
+    "motsCles": ["catalogue", "vide", "addon"],
+    "solutions": [
+      "Vérifiez que vous avez bien ajouté un addon.",
+      "Redémarrez Stremio.",
+      "Sur Android, videz le cache et relancez l'application."
+    ]
+  },
+  {
+    "titre": "Lecture qui bug",
+    "motsCles": ["lecture", "lag", "buffering"],
+    "solutions": [
+      "Vérifiez votre connexion Internet.",
+      "Essayez une autre source.",
+      "Si vous utilisez Real-Debrid, vérifiez qu'il est actif."
+    ]
+  }
+]

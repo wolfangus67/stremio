@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>FAQ Stremio Interactive</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>FAQ Interactive Stremio</h1>
+
+  <!-- Barre de recherche -->
+  <input type="text" id="search" placeholder="Tapez un mot clé (ex: catalogue)">
+  <div id="search-results"></div>
+
+  <!-- Parcours guidé -->
+  <div id="steps">
+    <h2>Guidage par étapes</h2>
+    <div id="step-version"></div>
+    <div id="step-device"></div>
+    <div id="step-problem"></div>
+  </div>
+
+  <!-- Résultat ou formulaire -->
+  <div id="solution"></div>
+  <div id="formulaire-container" style="display:none;">
+    <h3>Message prêt à poster :</h3>
+    <pre id="formulaire"></pre>
+    <button onclick="copier()">📋 Copier</button>
+    <a id="poster" target="_blank" class="poster">📤 Poster sur Reddit</a>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
