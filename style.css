@@ -10,12 +10,31 @@ h1, h2 {
   text-align: center;
 }
 
-input {
-  width: 100%;
+/* Barre de recherche */
+#search-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+#search-bar input {
+  flex: 1;
   padding: 0.5rem;
-  margin: 1rem 0;
   border: 1px solid #ccc;
   border-radius: 8px;
+}
+
+#search-btn {
+  background: royalblue;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0 1rem;
+  cursor: pointer;
+}
+
+#search-btn:hover {
+  background: dodgerblue;
 }
 
 button, .poster {
