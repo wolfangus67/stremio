@@ -156,8 +156,8 @@ async function recherche(val) {
     try {
       const r = await fetch(url);
       if (!r.ok) throw new Error(`Erreur HTTP ${r.status}`);
-      const wrappedData = await r.json();
-      const data = JSON.parse(wrappedData.contents);
+      const data = await r.json();
+
 
       const posts = data.data.children.map(p => ({
         title: p.data.title,
